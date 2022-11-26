@@ -1,48 +1,30 @@
 #include "main.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
+
 /**
- * _printf - Build out the printf function
- * @format: string passed with possible format specifiers
- * Return: number of characters printed
- */
+ * _printf - Produces output according to a format
+ * @format: Is a character string. The format string
+ * is composed of zero or more directives
+ *
+ * Return: The number of characters printed (excluding
+ * the null byte used to end output to strings)
+ **/
 int _printf(const char *format, ...)
 {
-	int i, blen, hlen;
-	double totalBuffer;
-	double *total;
-	va_list argp;
-	char buffer[BUFSIZE], *holder;
-	char *(*pointer_get_valid)(va_list);
+	int size;
+	va_list args;
 
-	for (i = 0; i < BUFSIZE; i++)
-	{
-		buffer[i] = 0;
-	}
-	totalBuffer = 0;
-	pointer_get_valid = NULL;
-	total = &totalBuffer;
-	va_start(argp, format);
-	for (i = blen = hlen = 0; format && format[i]; i++)
-	{
-		if (format[i] == '%')
-		{
-			pointer_get_valid = get_valid_type(format[i + 1]);
-			holder = (pointer_get_valid == NULL) ?
-				found_nothing(format[i + 1]) :
-				pointer_get_valid(argp);
-			hlen = _strlen(holder);
-			blen = alloc_buffer(holder, hlen, buffer, blen, total);
-			i++;
-		}
-		else
-		{
-			holder = ctos(format[i]);
-			blen = alloc_buffer(holder, 1, buffer, blen, total);
-		}
-	}
-	va_end(argp);
-	_puts(buffer, blen);
-	return (totalBuffer + blen);
+	if (format == NULL)
+		return (-1);
+
+	size = _strlen(format);
+	if (size <= 0)
+		return (0);
+
+	va_start(args, format);
+	size = handler(format, args);
+
+	_putchar(-1);
+	va_end(args);
+
+	return (size);
 }

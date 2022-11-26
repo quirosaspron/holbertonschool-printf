@@ -1,35 +1,44 @@
-#ifndef HOLB_H
-#define HOLB_H
-
-#define BUFSIZE 1025
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdarg.h>
 
+/* utils.c */
+int _strlen(const char *);
+int print(char *);
+char *itoa(long int, int);
+
+/* printf.c */
+int _printf(const char *, ...);
+
+/* handler.c */
+int handler(const char *, va_list);
+int percent_handler(const char *, va_list, int *);
+
+/* printers */
+int print_string(va_list);
+int print_char(va_list);
+int print_integer(va_list);
+int print_binary(va_list);
+int print_rot(va_list);
+int print_unsigned(va_list);
+int print_octal(va_list);
+int print_hexadecimal_low(va_list);
+int print_hexadecimal_upp(va_list);
+int print_pointer(va_list);
+int print_rev_string(va_list);
+
+/* _putchar.c */
+int _putchar(char);
+int buffer(char);
+
 /**
-  * struct validTypes - structure to lookup functions for valid types
-  * @valid: flags are preceded by a '%' character.
-  * @f: pointer to function
-  */
-typedef struct validTypes
+ * struct _format - Typedef struct
+ *
+ * @type: Format
+ * @f: The function associated
+ **/
+typedef struct _format
 {
-	char *valid;
-	char *(*f)();
-} v_types;
-
-int _printf(const char *format, ...);
-char *(*get_valid_type(char s))(va_list);
-char *found_char(va_list c);
-char *found_string(va_list *s);
-char *found_percent();
-char *found_int(va_list n);
-char *found_unsigned(va_list usign);
-char *found_nothing(char);
-char *found_reverse(va_list s);
-char *found_rot13(va_list s);
-char *found_octal(va_list n);
-char *_memcpy(char *dest, char *src, unsigned int n, unsigned int bufferlen);
-int _strlen(char *s);
-void _puts(char *buffer, int size);
-int alloc_buffer(char *hold, int hlen, char *buffer, int blen, double *total);
-char *ctos(char c);
-
-#endif
+	char type;
+	int (*f)(va_list);
+} format;
