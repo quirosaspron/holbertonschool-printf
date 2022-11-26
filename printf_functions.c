@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
-#include "holberton.h"
+#include "main.h"
 /**
   * found_char - converts a char to a string
   * @c: char to convert
