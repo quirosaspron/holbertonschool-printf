@@ -1,3 +1,9 @@
+#ifndef HOLB_H
+#define HOLB_H
+
+#define BUFSIZE 1025
+#include <stdarg.h>
+
 /**
   * struct validTypes - structure to lookup functions for valid types
   * @valid: flags are preceded by a '%' character.
@@ -25,3 +31,5 @@ int _strlen(char *s);
 void _puts(char *buffer, int size);
 int alloc_buffer(char *hold, int hlen, char *buffer, int blen, double *total);
 char *ctos(char c);
+
+#endif
